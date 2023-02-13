@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ClientNotification.Persistence.Migrations
+namespace ClientNotification.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230210141910_Init")]
-    partial class Init
+    [Migration("20230213122916_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,17 @@ namespace ClientNotification.Persistence.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 500.0,
+                            CreditNumber = "AA12345",
+                            DueDate = new DateTime(2023, 2, 13, 13, 29, 16, 366, DateTimeKind.Local).AddTicks(6775),
+                            EMail = "Random@example.com",
+                            Name = "Jone Dou"
+                        });
                 });
 
             modelBuilder.Entity("ClientNotification.Domain.Entities.MessageTemplate", b =>
@@ -85,6 +96,20 @@ namespace ClientNotification.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("MessageTemplates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Message = "{Creditnumber}\r\n\r\n \r\n\r\nDear {Name}\r\n\r\nPlease pay by {dueDate}\r\n\r\nThe amount {amount}\r\n\r\n \r\n\r\nGreetings Vexcash",
+                            Name = "Reminder"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Message = "Dear {Name}\r\n\r\nThank you for your recent application for a VEXCASH credit. Unfortunately, you do not meet our current criteria for credit approval. \r\n\r\nYour request for {Amount} euro credit was declined\r\n\r\nIf you feel that you have information that will make a difference in these two considerations, please write to us.\r\n",
+                            Name = "Cancellation"
+                        });
                 });
 
             modelBuilder.Entity("ClientNotification.Domain.Entities.SendGridResponse", b =>

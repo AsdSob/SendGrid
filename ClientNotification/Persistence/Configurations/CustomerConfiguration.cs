@@ -1,6 +1,7 @@
 ﻿using ClientNotification.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.VisualBasic;
 
 namespace ClientNotification.Persistence.Configurations
 {
@@ -32,6 +33,20 @@ namespace ClientNotification.Persistence.Configurations
                 .IsUnique();
             builder.HasIndex(x => x.EMail)
                 .IsUnique();
+
+            builder.HasData
+                (
+                    new Customer
+                    {
+                        Id = 1,
+                        Amount = 500,
+                        DueDate = DateAndTime.Now,
+                        EMail = "Random@example.com",
+                        CreditNumber = "AA12345",
+                        Name = "Jone Dou"
+
+                    }
+                );
         }
     }
 }

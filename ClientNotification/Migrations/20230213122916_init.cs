@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ClientNotification.Persistence.Migrations
+namespace ClientNotification.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,6 +65,20 @@ namespace ClientNotification.Persistence.Migrations
                         principalTable: "MessageTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "Amount", "CreditNumber", "DueDate", "EMail", "Name" },
+                values: new object[] { 1, 500.0, "AA12345", new DateTime(2023, 2, 13, 13, 29, 16, 366, DateTimeKind.Local).AddTicks(6775), "Random@example.com", "Jone Dou" });
+
+            migrationBuilder.InsertData(
+                table: "MessageTemplates",
+                columns: new[] { "Id", "Message", "Name" },
+                values: new object[,]
+                {
+                    { 1, "{Creditnumber}\r\n\r\n \r\n\r\nDear {Name}\r\n\r\nPlease pay by {dueDate}\r\n\r\nThe amount {amount}\r\n\r\n \r\n\r\nGreetings Vexcash", "Reminder" },
+                    { 2, "Dear {Name}\r\n\r\nThank you for your recent application for a VEXCASH credit. Unfortunately, you do not meet our current criteria for credit approval. \r\n\r\nYour request for {Amount} euro credit was declined\r\n\r\nIf you feel that you have information that will make a difference in these two considerations, please write to us.\r\n", "Cancellation" }
                 });
 
             migrationBuilder.CreateIndex(

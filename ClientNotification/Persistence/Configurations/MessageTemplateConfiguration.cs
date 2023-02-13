@@ -22,6 +22,23 @@ namespace ClientNotification.Persistence.Configurations
 
             builder.HasIndex(x => x.Name)
                 .IsUnique();
+
+
+            builder.HasData(
+                new MessageTemplate
+                {
+                    Id = 1,
+                    Name = "Reminder",
+                    Message = "{Creditnumber}<br>Dear {Name}<br><br><br>Please pay by {dueDate}<br>The amount {amount}<br><br><br>Greetings Vexcash"
+                },
+
+                new MessageTemplate
+                {
+                    Id  = 2,
+                    Name = "Cancellation",
+                    Message = "Dear {Name}<br>Thank you for your recent application for a VEXCASH credit. Unfortunately, you do not meet our current criteria for credit approval. <br>Your request for {Amount} euro credit was declined<br>If you feel that you have information that will make a difference in these two considerations, please write to us."
+                }
+                ); 
         }
     }
 }
